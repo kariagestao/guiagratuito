@@ -449,15 +449,16 @@ function handleSubmit(e){
   btn.textContent='Enviando...';btn.disabled=true;
   
 const formData=new FormData(e.target);const dados={nome:formData.get('nome'),email:formData.get('email'),escritorio:formData.get('escritorio')};
-fetch('https://default00e1fb4ce4d2472bacdb3004309d91.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c06f8dc01f914c6b913c8d7aebd3e3c1/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8oNue4dxxhyDqihf9CmAkbwZwsA1d6uFnsyJuh8cGpg,{
+fetch('https://default00e1fb4ce4d2472bacdb3004309d91.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c06f8dc01f914c6b913c8d7aebd3e3c1/triggers/manual/paths/invoke?api-version=1',{
     method:'POST',
-  mode: 'no-cors'
+    mode:'no-cors',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
       nome: formData.get('nome'),
       email: formData.get('email'),
       escritorio: formData.get('escritorio')
-    })})
+    })
+  })
   .then(()=>{
     document.getElementById('formActual').classList.add('hidden');
     document.getElementById('formSuccess').classList.add('active');
