@@ -449,15 +449,51 @@ function handleSubmit(e){
   btn.textContent='Enviando...';btn.disabled=true;
   
 const formData=new FormData(e.target);const dados={nome:formData.get('nome'),email:formData.get('email'),escritorio:formData.get('escritorio')};
-fetch('https://formspree.io/f/mzdkaoev', {
+fetch('https://api.web3forms.com/submit', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
+    access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
+
     nome: formData.get('nome'),
     email: formData.get('email'),
-    escritorio: formData.get('escritorio')
+    escritorio: formData.get('escritorio'),
+
+    subject: 'Novo lead - Guia KARIA Gestão',
+    from_name: 'KARIA Gestão',
+    replyto: formData.get('email'),
+
+    autoresponse: true,
+    autoresponse_subject: 'Seu Guia de Maturidade chegou - KARIA Gestão',
+
+    autoresponse_message: `
+<p>Olá!</p>
+
+<p>
+<a href="https://kariagestao-my.sharepoint.com/:b:/p/nathalya/IQBYP0djMJRfRqO_HSjEXopaARt_oB5Ee6BR0YyVixpb2Mc?e=NfnibZ">
+👉 Clique aqui para acessar seu guia
+</a>
+</p>
+
+<p>
+<a href="https://form.typeform.com/to/xMVWB3ew#email=${formData.get('email')}&first_name=${formData.get('nome')}">
+👉 Clique aqui para fazer seu diagnóstico
+</a>
+</p>
+
+<p>KARIA Gestão</p>
+`
   })
 })
+.then(()=>{
+  document.getElementById('formActual').classList.add('hidden');
+  document.getElementById('formSuccess').classList.add('active');
+})
+.catch(()=>{
+  btn.textContent='Quero receber o Guia →';
+  btn.disabled=false;
+  alert('Erro ao enviar. Tente novamente.');
+});
   .then(()=>{
     document.getElementById('formActual').classList.add('hidden');
     document.getElementById('formSuccess').classList.add('active');
