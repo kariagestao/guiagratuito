@@ -216,9 +216,7 @@
       <div class="form-actual" id="formActual">
         <h2 class="form-title">Acesse gratuitamente</h2>
         <p class="form-subtitle">Preencha os dados e receba o guia no seu e-mail.</p>
-        <form name="captura-guia" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
-          <input type="hidden" name="form-name" value="captura-guia">
-          <p style="display:none"><input name="bot-field"></p>
+        <form name="captura-guia" onsubmit="handleSubmit(event)">
           <div class="form-group">
             <label class="form-label">Nome completo</label>
             <input type="text" name="nome" class="form-input" placeholder="Seu nome" required>
@@ -449,10 +447,16 @@ function handleSubmit(e){
   e.preventDefault();
   const btn=e.target.querySelector('.btn-primary');
   btn.textContent='Enviando...';btn.disabled=true;
-  // Envia para Netlify Forms via fetch
-  const formData=new FormData(e.target);
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:new URLSearchParams(formData).toString()})
+  
+const formData=new FormData(e.target);const dados={nome:formData.get('nome'),email:formData.get('email'),escritorio:formData.get('escritorio')};
+fetch('https://default00e1fb4ce4d2472bacdb3004309d91.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c06f8dc01f914c6b913c8d7aebd3e3c1/triggers/manual/paths/invoke?api-version=1',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      nome: formData.get('nome'),
+      email: formData.get('email'),
+      escritorio: formData.get('escritorio')
+    })})
   .then(()=>{
     document.getElementById('formActual').classList.add('hidden');
     document.getElementById('formSuccess').classList.add('active');
