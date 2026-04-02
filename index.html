@@ -426,7 +426,9 @@ function handleSubmit(e){
   .then(res=>res.json())
   .then(data=>{
     if(data.success){
-      window.location.href = '/obrigado.html';
+     const nome = encodeURIComponent(formData.get('nome'));
+const email = encodeURIComponent(formData.get('email'));
+window.location.href = '/obrigado.html?nome=' + nome + '&email=' + email;
     } else {
       btn.textContent='Quero receber o Guia →';
       btn.disabled=false;
