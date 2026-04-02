@@ -426,8 +426,7 @@ function handleSubmit(e){
   .then(res=>res.json())
   .then(data=>{
     if(data.success){
-      document.getElementById('formActual').classList.add('hidden');
-      document.getElementById('formSuccess').classList.add('active');
+      window.location.href = '/obrigado.html';
     } else {
       btn.textContent='Quero receber o Guia →';
       btn.disabled=false;
